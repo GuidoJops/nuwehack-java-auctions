@@ -3,6 +3,7 @@ package com.hackathon.hackathon.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,8 @@ public class HackathonService {
 	}
 
 	public Map<String, String> getWinningBidder() {
-    	return null;
+        return getAllItems().stream()
+                .filter(item -> item.getCurrentBidder() != null)
+                .collect(Collectors.toMap(Item::getName, item -> item.getCurrentBidder().getName()));
     }
 }
