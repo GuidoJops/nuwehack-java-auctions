@@ -56,11 +56,11 @@ public class HackathonService {
     }
 
 	public String makeOffer(String itemName, double amount, Bidder bidder) {
-    	return null;
+        return null;
 	}
 
 	public Map<String, String> getWinningBidder() {
-        return getAllItems().stream()
+        return items.stream()
                 .filter(item -> item.getCurrentBidder() != null)
                 .collect(Collectors.toMap(Item::getName, item -> item.getCurrentBidder().getName()));
     }
