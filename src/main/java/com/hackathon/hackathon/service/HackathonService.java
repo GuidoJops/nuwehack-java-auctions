@@ -72,13 +72,11 @@ public class HackathonService {
     }
 
     private Item getItemByName(String itemName) {
-        for (Item item : items) {
-            if (item.getName().equalsIgnoreCase(itemName)) {
-                return item;
-            }
-        }
-        return null;
-    }
+        return items.stream()
+                .filter(item -> item.getName().equalsIgnoreCase(itemName))
+                .findFirst()
+                .orElse(null);
+     }
 
     public Map<String, String> getWinningBidder() {
         return items.stream()
