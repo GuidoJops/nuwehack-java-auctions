@@ -55,11 +55,30 @@ public class HackathonService {
         items.add(item);
     }
 
-	public String makeOffer(String itemName, double amount, Bidder bidder) {
-        return null;
-	}
+    public String makeOffer(String itemName, double amount, Bidder bidder) {
+        Item item = getItemByName(itemName);
+        if (item == null) {
+            return ITEM_NOT_FOUND;
+        }
+        if (amount <= item.getHighestOffer()) {
+            return OFFER_REJECTED;
+        } else {
+            item.setHighestOffer(amount);
+            item.setCurrentBidder(bidder);
+            return OFFER_ACCEPTED;
+        }
+    }
 
-	public Map<String, String> getWinningBidder() {
+    private Item getItemByName(String itemName) {
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Map<String, String> getWinningBidder() {
         return items.stream()
                 .filter(item -> item.getCurrentBidder() != null)
                 .collect(Collectors.toMap(Item::getName, item -> item.getCurrentBidder().getName()));
