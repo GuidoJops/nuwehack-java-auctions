@@ -48,7 +48,9 @@ public class HackathonService {
     }
 
     public List<Item> getItemsByType(String type) {
-    	return null;
+    	return items.stream()
+                .filter(item -> item.getType().equalsIgnoreCase(type))
+                .toList();
     }
 
     public void addItem(Item item) {
