@@ -11,10 +11,13 @@ public class Art extends Item {
     private int yearCreated;
 
     public Art(String name, double initialPrice, Bidder currentBidder, String type, String artist, int yearCreated) {
+        // Llamada al constructor de la clase padre
         super(name, initialPrice, currentBidder, type);
         this.artist = artist;
         this.yearCreated = yearCreated;
     }
+
+    // Getters y Setters
 
     public String getArtist() {
         return artist;

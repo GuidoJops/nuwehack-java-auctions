@@ -3,6 +3,7 @@ package com.hackathon.hackathon.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,11 @@ public class HackathonService {
     }
 
     public String makeOffer(String itemName, double amount, Bidder bidder) {
-        Item item = getItemByName(itemName);
-        if (item == null) {
+        Optional<Item> optionalItem = getItemByName(itemName);
+        if (optionalItem.isEmpty()) {
             return ITEM_NOT_FOUND;
         }
+        Item item = optionalItem.get();
         if (amount <= item.getHighestOffer()) {
             return OFFER_REJECTED;
         } else {
@@ -71,12 +73,12 @@ public class HackathonService {
         }
     }
 
-    private Item getItemByName(String itemName) {
+    // Busca item por nombre, Devuelve un Optional en lugar del item para evitar uso de null
+    private Optional<Item> getItemByName(String itemName) {
         return items.stream()
                 .filter(item -> item.getName().equalsIgnoreCase(itemName))
-                .findFirst()
-                .orElse(null);
-     }
+                .findFirst();
+    }
 
     public Map<String, String> getWinningBidder() {
         return items.stream()
